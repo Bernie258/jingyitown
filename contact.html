@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>联系我们 · 静怡镇</title>
+        <!-- 引入思源宋体 / 黑体（带系统字体回退，离线也不影响排版） -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500&family=Noto+Serif+SC:wght@500;600&display=swap">
+        <!-- 引入样式表 -->
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <!-- 顶部天际线横幅：天空+建筑+草地，时段由真实时间决定，由 script.js 注入 -->
+        <div id="site-banner"></div>
+
+        <div class="wrap">
+            <!-- 共享导航：由 script.js 自动注入并高亮当前页 -->
+            <nav id="site-nav"></nav>
+
+            <!-- 页面内容 -->
+            <main>
+                <h1 class="page-title">联系我们</h1>
+
+                <div class="contact-widgets">
+                    <!-- MC 服务器状态小组件：由 JS 动态注入 src，HTML 源码中不暴露服务器 ID -->
+                    <section class="widget-card">
+                        <h2 class="widget-title">服务器状态</h2>
+                        <img class="mc-status-img" id="mc-status-img" alt="静怡镇服务器状态">
+                    </section>
+
+                    <!-- QQ 群：仅显示群号，无跳转按钮 -->
+                    <section class="widget-card">
+                        <h2 class="widget-title">加入社群</h2>
+                        <p class="widget-sub">QQ 群号：<strong>1020174303</strong></p>
+                    </section>
+                </div>
+            </main>
+        </div>
+
+        <!-- 共享页脚：由 script.js 自动注入 -->
+        <footer id="site-footer"></footer>
+
+        <!-- 引入共享模板脚本（导航与页脚注入、当前页高亮） -->
+        <script src="script.js"></script>
+    </body>
+</html>

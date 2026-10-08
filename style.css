@@ -1,5 +1,464 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* ============================================================
+   静怡镇官网样式表
+   设计基调：浅木色为主 + 深木色点缀，宋体标题 + 黑体正文
+   目标氛围：文学、静逸、疏朗留白
+   ============================================================ */
+
+/* ===== 全局重置与设计变量 ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* 木质色调：浅木为主，深木点缀 */
+  --wood-bg: #f5efe3;        /* 浅米/原木 主背景 */
+  --wood-bg-alt: #ede3d2;    /* 略深米色 次背景 */
+  --wood-cream: #faf6ed;     /* 奶白 卡片表面 */
+  --wood-dark: #6b4f3a;      /* 深木/胡桃棕 点缀文字 */
+  --wood-darker: #42301f;    /* 深棕 标题与页脚背景 */
+  --wood-accent: #8b6a4f;    /* 茶褐 链接与边线 */
+  --ink: #3a2e26;            /* 墨色 正文 */
+
+  /* 字体：宋体标题 + 黑体正文，带系统字体回退 */
+  --font-serif: 'Noto Serif SC', 'Songti SC', 'STSong', 'SimSun', serif;
+  --font-sans: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+/* —— 夜晚暗色主题：覆盖 CSS 变量，所有已有样式自动跟随 —— */
+body[data-time="night"] {
+  --wood-bg: #1a1714;        /* 深胡桃棕 主背景 */
+  --wood-bg-alt: #24201c;    /* 略深棕 次背景 */
+  --wood-cream: #2a2520;     /* 暗棕 卡片表面 */
+  --wood-dark: #b8a080;      /* 浅木/驼色 点缀文字 */
+  --wood-darker: #d4c4a8;    /* 浅驼 标题 */
+  --wood-accent: #a08868;    /* 驼褐 链接与边线 */
+  --ink: #d8cfc4;            /* 奶白 正文 */
+}
+
+/* ===== 基础排版 ===== */
+body {
+  background-color: var(--wood-bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  line-height: 1.8;            /* 较大行高，营造疏朗静逸感 */
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--wood-dark);
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+a:hover { color: var(--wood-accent); }
+
+/* 内容容器：居中限宽，保证阅读舒适；顶部留白避免内容紧贴视口 */
+.wrap {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 0;
+}
+
+/* ===== 首页 Hero：顶部大留白 + 标题 ===== */
+.hero {
+  padding: 9rem 0 3.5rem;       /* 顶部大留白，呼应"最顶上留出空白" */
+  text-align: center;
+}
+.hero h1 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: clamp(2.8rem, 7vw, 4.4rem);
+  color: var(--wood-darker);
+  letter-spacing: 0.4em;       /* 字距拉开，更显疏朗古雅 */
+  padding-left: 0.4em;         /* 补偿字距导致的视觉偏移 */
+}
+.hero .subtitle {
+  margin-top: 1.5rem;
+  font-family: var(--font-serif);
+  font-size: clamp(1.05rem, 2.5vw, 1.35rem);
+  color: var(--wood-dark);
+  letter-spacing: 0.5em;
+  padding-left: 0.5em;
+}
+.hero .divider {
+  width: 4rem;
+  height: 1px;
+  background: var(--wood-accent);
+  margin: 2.5rem auto 0;
+  border: none;
+  opacity: 0.6;
+}
+
+/* ===== 导航（共享组件，由 JS 注入） ===== */
+#site-nav {
+  margin: 0 auto 4rem;
+  padding: 1.1rem 0;
+  border-top: 1px solid rgba(107, 79, 58, 0.25);
+  border-bottom: 1px solid rgba(107, 79, 58, 0.25);
+  /* 滚动折叠后导航固定：粘到色条下方（色条高 12px） */
+  position: sticky;
+  top: 12px;
+  z-index: 10;
+  background: var(--wood-bg);
+}
+.nav-list {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+.nav-list a {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  letter-spacing: 0.2em;
+  padding: 0.3rem 0;
+  position: relative;
+  display: inline-block;
+}
+/* 悬停下划线生长效果 */
+.nav-list a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 1px;
+  background: var(--wood-accent);
+  transition: width 0.3s ease;
+}
+.nav-list a:hover::after,
+.nav-list a.active::after { width: 100%; }
+.nav-list a.active { color: var(--wood-darker); }
+
+/* ===== 内容区 ===== */
+main { padding-bottom: 5rem; }
+
+.section {
+  margin: 0 auto 3.5rem;
+  max-width: 680px;
+}
+.section-title {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  color: var(--wood-darker);
+  text-align: center;
+  margin-bottom: 1.8rem;
+  letter-spacing: 0.15em;
+}
+.section p {
+  text-indent: 2em;           /* 段首缩进，呼应文学排版 */
+  margin-bottom: 1.2rem;
+  color: var(--ink);
+}
+
+/* 子页面通用：页面标题 */
+.page-title {
+  font-family: var(--font-serif);
+  text-align: center;
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  color: var(--wood-darker);
+  letter-spacing: 0.3em;
+  padding: 5rem 0 2rem;
+}
+.page-title::after {
+  content: '';
+  display: block;
+  width: 3rem;
+  height: 1px;
+  background: var(--wood-accent);
+  margin: 1.5rem auto 0;
+  opacity: 0.6;
+}
+
+/* 占位提示文字 */
+.placeholder {
+  text-align: center;
+  color: var(--wood-dark);
+  opacity: 0.7;
+  padding: 3rem 0 5rem;
+  font-style: italic;
+}
+
+/* ===== 页脚（共享组件，由 JS 注入，通栏深木色） ===== */
+#site-footer {
+  background: var(--wood-darker);
+  color: var(--wood-bg);
+}
+.footer-inner {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+.footer-title {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  letter-spacing: 0.4em;
+  padding-left: 0.4em;
+}
+.footer-sub {
+  margin-top: 0.6rem;
+  font-family: var(--font-serif);
+  font-size: 0.95rem;
+  letter-spacing: 0.3em;
+  opacity: 0.75;
+  padding-left: 0.3em;
+}
+.footer-copy {
+  margin-top: 1.5rem;
+  font-size: 0.8rem;
+  opacity: 0.55;
+}
+
+/* ============================================================
+   顶部天际线横幅：天空 + 建筑群 + 海面 + 草地岛 + 接入桥梁
+   时段通过父元素 data-time 属性切换天空/水面/草地配色
+   每栋建筑用 <img class="building"> 放入 .buildings，底部对齐岛顶
+   ============================================================ */
+.skyline-banner {
+  position: relative;
+  width: 100%;
+  height: 200px;               /* 横幅高度，建筑依此对齐 */
+  overflow: hidden;
+  border-bottom: 1px solid rgba(107, 79, 58, 0.2);
+  transition: height 0.45s ease, border-color 0.45s ease;
+}
+
+/* 折叠态：缩为一条时段色条（天空层保留，内部元素渐隐） */
+.skyline-banner.collapsed {
+  height: 12px;
+  border-bottom-color: transparent;
+  /* 折叠后粘到视口顶部（sticky 保留文档流，不会导致下方跳变） */
+  position: sticky;
+  top: 0;
+  z-index: 9;
+}
+.skyline-banner.collapsed .stars,
+.skyline-banner.collapsed .water,
+.skyline-banner.collapsed .island,
+.skyline-banner.collapsed .bridge,
+.skyline-banner.collapsed .buildings {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+/* 天空层始终保留，折叠后作为时段色条 */
+.skyline-banner.collapsed .sky {
+  transition: none;
+}
+
+/* 天空层：铺满横幅，渐变背景 */
+.sky {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  transition: background 1.2s ease;
+}
+
+/* 星星层：仅夜晚显示 */
+.stars {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  opacity: 0;
+  pointer-events: none;
+  /* 用多个径向渐变模拟星点 */
+  background-image:
+    radial-gradient(1.5px 1.5px at 12% 18%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 28% 42%, #fff, transparent),
+    radial-gradient(1px 1px at 45% 22%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 62% 55%, #fff, transparent),
+    radial-gradient(1px 1px at 78% 30%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 88% 48%, #fff, transparent),
+    radial-gradient(1px 1px at 38% 60%, #fff, transparent),
+    radial-gradient(1px 1px at 70% 15%, #fff, transparent);
+  transition: opacity 1.2s ease;
+}
+
+/* 水面：底部极窄一条，铺满宽；草地岛覆盖大部分，仅左右两侧露出水 */
+.water {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 14px;
+  z-index: 2;
+  transition: background 1.2s ease;
+}
+
+/* 草地岛：底部主体块，仅左右两侧露出水面 */
+.island {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 14px;                 /* 岛底坐在水面顶部 */
+  width: 80%;                   /* 岛占 80%，左右各露 10% 水面（让桥更宽） */
+  height: 38px;                 /* 岛高减薄到 38px */
+  z-index: 3;
+  border-radius: 3px 3px 0 0;
+  transition: background 1.2s ease;
+}
+
+/* 建筑容器：底部对齐岛顶（岛顶 = 14 + 38 = 52px） */
+.buildings {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 52px;
+  z-index: 4;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 4px;
+  padding: 0 1rem;
+}
+.building {
+  display: block;
+  height: auto;
+  max-height: 120px;
+  width: auto;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.25));
+}
+
+/* 桥梁：从横幅左边缘延伸到岛左边缘，桥面与岛顶齐平 */
+/* 岛左边缘 = (100% - 80%) / 2 = 10%，桥也占横幅 10% 宽 */
+.bridge {
+  position: absolute;
+  left: 0;
+  right: 90%;                   /* 桥从左到岛左边缘（10%处） */
+  bottom: 38px;                 /* 桥面底部：岛顶 52px - 桥面厚 14px = 38px */
+  height: 14px;                 /* 桥面厚度 14px */
+  z-index: 3;
+  background: #8a8a8a;
+}
+/* 桥墩：从桥面底部向下延伸，穿过水面到横幅底部 */
+/* bottom: -38px = 桥墩顶端紧贴桥面底部，向下延伸 38px 到横幅底部 */
+.bridge::before,
+.bridge::after {
+  content: '';
+  position: absolute;
+  bottom: -38px;                /* 桥墩顶端 = 桥面底部 */
+  width: 6px;
+  height: 38px;                 /* 撑到横幅底部，穿过水面 */
+  background: #7a7a7a;
+}
+/* 两根桥墩按桥宽分布：桥占横幅 10%，桥墩在桥的 1/3 和 2/3 处 */
+.bridge::before { left: 30%; }
+.bridge::after  { left: 70%; }
+
+/* —— 时段配色：早上 dawn —— */
+.skyline-banner[data-time="dawn"] .sky {
+  background: linear-gradient(180deg, #cfe7f2 0%, #ffd9c0 60%, #fce4b8 100%);
+}
+.skyline-banner[data-time="dawn"] .water {
+  background: linear-gradient(180deg, #9fc6d8 0%, #8ab4c8 100%);
+}
+.skyline-banner[data-time="dawn"] .island { background: #8ab86e; }
+.skyline-banner[data-time="dawn"] .stars { opacity: 0; }
+
+/* —— 时段配色：中午 day —— */
+.skyline-banner[data-time="day"] .sky {
+  background: linear-gradient(180deg, #aee0f5 0%, #6ec3ed 100%);
+}
+.skyline-banner[data-time="day"] .water {
+  background: linear-gradient(180deg, #4a9bc8 0%, #3a85b0 100%);
+}
+.skyline-banner[data-time="day"] .island { background: #7ab86e; }
+.skyline-banner[data-time="day"] .stars { opacity: 0; }
+
+/* —— 时段配色：傍晚 dusk —— */
+.skyline-banner[data-time="dusk"] .sky {
+  background: linear-gradient(180deg, #556688 0%, #cc6699 50%, #ff9966 100%);
+}
+.skyline-banner[data-time="dusk"] .water {
+  background: linear-gradient(180deg, #6a5a88 0%, #504070 100%);
+}
+.skyline-banner[data-time="dusk"] .island { background: #6a9e5c; }
+.skyline-banner[data-time="dusk"] .stars { opacity: 0.2; }
+
+/* —— 时段配色：夜晚 night —— */
+.skyline-banner[data-time="night"] .sky {
+  background: linear-gradient(180deg, #050818 0%, #0d1b3a 50%, #1a1a3e 100%);
+}
+.skyline-banner[data-time="night"] .water {
+  background: linear-gradient(180deg, #1a2a4a 0%, #0d1a30 100%);
+}
+.skyline-banner[data-time="night"] .island { background: #2d4a3a; }
+.skyline-banner[data-time="night"] .stars { opacity: 0.85; }
+/* 夜晚桥面略暗 */
+.skyline-banner[data-time="night"] .bridge,
+.skyline-banner[data-time="night"] .bridge::before,
+.skyline-banner[data-time="night"] .bridge::after {
+  background: #5a5a5a;
+}
+
+/* 横幅下方让标题区有自然过渡，减少压迫感 */
+.hero { padding-top: 5rem; }
+
+/* ===== 联系页：小组件卡片 ===== */
+.contact-widgets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.8rem;
+  justify-content: center;
+  max-width: 680px;
+  margin: 0 auto;
+}
+.widget-card {
+  flex: 1 1 280px;
+  background: var(--wood-cream);
+  border: 1px solid rgba(107, 79, 58, 0.18);
+  border-radius: 6px;
+  padding: 1.8rem 1.5rem;
+  text-align: center;
+  transition: background 0.4s ease, border-color 0.4s ease;
+}
+.widget-title {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  color: var(--wood-darker);
+  letter-spacing: 0.2em;
+  padding-left: 0.2em;
+  margin-bottom: 1rem;
+}
+.widget-sub {
+  font-size: 0.85rem;
+  color: var(--wood-dark);
+  letter-spacing: 0.05em;
+  margin-top: 0.8rem;
+}
+/* MC 状态图片：保持原生宽高，限制最大宽度 */
+.mc-status-img {
+  display: block;
+  max-width: 100%;
+  margin: 0 auto;
+  border-radius: 4px;
+}
+/* QQ 加群按钮：木质色调的圆角按钮 */
+.qq-btn {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.65rem 2rem;
+  background: var(--wood-dark);
+  color: var(--wood-cream);
+  border-radius: 4px;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  letter-spacing: 0.15em;
+  padding-left: 2.15rem;
+  transition: background 0.25s ease, transform 0.15s ease;
+}
+.qq-btn:hover {
+  background: var(--wood-darker);
+  transform: translateY(-1px);
+}
+
+/* ===== 响应式：小屏适配 ===== */
+@media (max-width: 600px) {
+  .hero { padding: 5rem 0 2.5rem; }
+  .nav-list { gap: 1.6rem; }
+  .nav-list a { font-size: 1rem; }
+  #site-nav { margin-bottom: 2.5rem; }
+  main { padding-bottom: 3rem; }
 }

@@ -3,22 +3,43 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>静怡镇·静揽沧波,怡居仙岛</title>
+        <title>静怡镇 · 静揽沧波,怡居仙岛</title>
+        <!-- 引入思源宋体 / 黑体（带系统字体回退，离线也不影响排版） -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500&family=Noto+Serif+SC:wght@500;600&display=swap">
         <!-- 引入样式表 -->
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <header id="header">
-            <h1 id="mainTitle">静怡镇</h1>
-            <h2 id="subTitle">静揽沧波 怡居仙岛</h2>
-        </header> 
-        <div id="guide">
-            <hr>
-                <a href="index.html">首页</a>
-                <a href="about.html">建筑</a>
-                <a href="story.html">故事</a>
-                <a href="contact.html">联系我们</a>
-            <hr>
+        <!-- 顶部天际线横幅：天空+建筑+草地，时段由真实时间决定，由 script.js 注入 -->
+        <div id="site-banner"></div>
+
+        <div class="wrap">
+            <!-- 首页 Hero：顶部大留白 + 标题 + 副标题 -->
+            <section class="hero">
+                <h1>静怡镇</h1>
+                <p class="subtitle">静揽沧波 怡居仙岛</p>
+                <hr class="divider">
+            </section>
+
+            <!-- 共享导航：由 script.js 自动注入并高亮当前页 -->
+            <nav id="site-nav"></nav>
+
+            <!-- 内容区：镇子简介 -->
+            <main>
+                <section class="section">
+                    <h2 class="section-title">镇子简介</h2>
+                    <p>静怡镇是凌洲铁道服务器（WRMS）下的一个小镇，坐落于静怡岛全岛及其附属岛屿之上。镇名取"静怡"二字，盖因诸君曾历经高压之作，愿于此觅得一方静土，得以怡然自处、慢慢生活。</p>
+                    <p>镇内现有一座静怡站，与委托营建的西静怡站，余下建筑尚待来日添砖加瓦。不急，慢慢来。</p>
+                </section>
+            </main>
         </div>
+
+        <!-- 共享页脚：由 script.js 自动注入 -->
+        <footer id="site-footer"></footer>
+
+        <!-- 引入共享模板脚本（导航与页脚注入、当前页高亮） -->
+        <script src="script.js"></script>
     </body>
 </html>
