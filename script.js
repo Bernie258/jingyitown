@@ -49,7 +49,7 @@ function renderFooter() {
     <div class="footer-inner">
       <p class="footer-title">静怡镇</p>
       <p class="footer-sub">静揽沧波 · 怡居仙岛</p>
-      <p class="footer-copy">© ${new Date().getFullYear()} 静怡镇 · 凌洲铁道服务器</p>
+      <p class="footer-copy">© ${new Date().getFullYear()} 静怡镇 · 凌洲铁路服务器</p>
     </div>
   `;
 }
